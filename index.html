@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Diogo Santos Oliveira</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Canvas */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            min-height: 1.2em;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        /* Reveal Animation Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .experience-badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .tags {
+            margin-top: 1.5rem;
+        }
+
+        .tag-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-bottom: 0.8rem;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .nda-section {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 3.5rem;
+            border-radius: 24px;
+            border: 1px dashed rgba(148, 163, 184, 0.4);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            margin-bottom: 4rem;
+        }
+
+        .nda-section h2 {
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nda-text {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .github-link {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nda-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="particles-js"></canvas>
+
+    <div class="container">
+        <header>
+            <h1 id="typewriter"></h1>
+            <p class="intro" id="intro-text">
+                I am Diogo Santos Oliveira, developer focused on creating immersive experiences and robust systems.
+                With a background spanning high-scale game development and modern web applications,
+                I always strive for efficiency and scalability in my code.
+            </p>
+        </header>
+
+        <h2 class="section-title reveal">🛠️ My Specialties</h2>
+
+        <div class="grid">
+            <div class="card reveal">
+                <h3>🎮 Roblox Development</h3>
+                <span class="experience-badge">4 Years Experience</span>
+                <p>Expertise in modular architecture and performance optimization for front-page games.</p>
+                <div class="tags">
+                    <span class="tag-label">Tech Stack</span>
+                    <div class="tag-list">
+                        <span class="tag">Luau</span>
+                        <span class="tag">Rojo</span>
+                        <span class="tag">Modular Systems</span>
+                        <span class="tag">ProfileStore</span>
+                    </div>
+                </div>
+                <div class="tags">
+                    <span class="tag-label">Highlights</span>
+                    <div class="tag-list">
+                        <span class="tag">DataStore Management</span>
+                        <span class="tag">Git Workflow</span>
+                        <span class="tag">State Management</span>
+                    </div>
+                </div>
+                <div class="tags">
+                    <span class="tag-label">Sistemas</span>
+                    <div class="tag-list">
+                        <a href="https://github.com/Diogo-S-Oliveira/Roblox-Inventory-System" target="_blank"
+                            class="tag">📦 InventorySystem</a>
+                        <a href="https://github.com/Diogo-S-Oliveira/Roblox-Build-System" target="_blank" class="tag">⚒️
+                            BuildSystem</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>🕹️ Unity Development</h3>
+                <span class="experience-badge">1.5 Years Experience</span>
+                <p>Crafting core gameplay mechanics and systems logic.</p>
+                <div class="tags">
+                    <span class="tag-label">Tech Stack</span>
+                    <div class="tag-list">
+                        <span class="tag">C#</span>
+                        <span class="tag">Unity Engine</span>
+                        <span class="tag">Functional UI</span>
+                        <span class="tag">Gameplay Scripting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>🌐 Web Development</h3>
+                <span class="experience-badge">1.5 Years Experience</span>
+                <p>Full-stack development from UI design to scalable database structures.</p>
+                <div class="tags">
+                    <span class="tag-label">Core</span>
+                    <div class="tag-list">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">Express</span>
+                    </div>
+                </div>
+                <div class="tags">
+                    <span class="tag-label">Others</span>
+                    <div class="tag-list">
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">CSS3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nda-section reveal">
+            <h2>🔒 Confidentiality & Professionalism (NDA)</h2>
+            <div class="nda-text">
+                <p>Most of my complex and high-impact projects were developed under <strong>Non-Disclosure Agreements
+                        (NDA)</strong>.</p>
+                <br>
+                <p>This means that while I cannot publicly share the source code or specific details of certain systems
+                    (especially within the Roblox industry and corporate tools), these experiences have solidified my
+                    ability to work in professional environments, meeting strict deadlines and data security standards.
+                </p>
+            </div>
+        </div>
+
+        <div class="github-link reveal">
+            <a href="https://github.com/Diogo-S-Oliveira" target="_blank" class="btn-github">
+                Visit my GitHub Profile
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 1. Typewriter Effect
+        const text = "🚀 Full-Stack & Game Developer";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                document.getElementById("intro-text").style.opacity = "1";
+                document.getElementById("intro-text").style.transform = "translateY(0)";
+            }
+        }
+
+        // 2. Simple Particle System
+        const canvas = document.getElementById('particles-js');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5
+                });
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        // 3. Scroll Reveal
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        window.addEventListener('resize', initParticles);
+
+        // Start everything
+        window.onload = () => {
+            typeWriter();
+            initParticles();
+            animateParticles();
+            reveal();
+        };
+    </script>
+
+</body>
+
+</html>
